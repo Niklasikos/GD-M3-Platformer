@@ -1,22 +1,13 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour
+public class PlayerLevelSelect : MonoBehaviour
 {
-    public int coins;
-    public int health = 100;
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
     public Transform GroundCheck;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
-    public Image healthImage;
-    public TextMeshProUGUI coinsText;
-    public Scene currentScene;
-    public string currentSceneName;
 
     private Rigidbody2D rb;
     private bool isGrounded;
@@ -33,11 +24,6 @@ public class Player : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         extraJumps = extraJumpsValue;
-
-        currentScene = SceneManager.GetActiveScene();
-        currentSceneName = currentScene.name;
-
-        UpdateCoinCounter();
     }
 
     void Update()
@@ -64,8 +50,6 @@ public class Player : MonoBehaviour
         }
 
         SetAnimation(moveInput);
-
-        healthImage.fillAmount = health / 100f;
 
         if (moveInput > 0f) spriteRenderer.flipX = false;
         else if (moveInput < 0f) spriteRenderer.flipX = true;
@@ -100,37 +84,5 @@ public class Player : MonoBehaviour
                 animator.Play("Player_Fall");
             }
         }
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.tag == "Damage")
-        {
-            health -= 25;
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            StartCoroutine(BlinkRed());
-
-            if(health <= 0)
-            {
-                Die();
-            }
-        }
-    }
-
-    private IEnumerator BlinkRed()
-    {
-        spriteRenderer.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        spriteRenderer.color = Color.white;
-    }
-
-    private void Die()
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(currentSceneName);
-    }
-
-    public void UpdateCoinCounter()
-    {
-        coinsText.text = ": " + coins;
     }
 }
