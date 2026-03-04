@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    public int coins;
+    public static Player Instance;
+    public float coins;
     public int health = 100;
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
@@ -24,14 +25,16 @@ public class Player : MonoBehaviour
     private Animator animator;
 
     private SpriteRenderer spriteRenderer;
-    public int extraJumpsValue = 1;
-    private int extraJumps;
+    public float extraJumpsValue = 1;
+    private float extraJumps;
     void Start()
     {
+        Instance = this;
+        extraJumpsValue = GameManager.Instance.data[1];
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
+        extraJumpsValue = GameManager.Instance.data[1];
         extraJumps = extraJumpsValue;
 
         currentScene = SceneManager.GetActiveScene();
