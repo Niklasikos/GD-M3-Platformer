@@ -41,11 +41,6 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-    void Update()
-    {
-        
-    }
-
     public void UpdateFiles()
     {
         data[0] = totalCoins;
@@ -72,5 +67,13 @@ public class GameManager : MonoBehaviour
         data[3] = level2;
         data[4] = level3;
         data[5] = level4; 
+    }
+
+    void Update()
+    {
+        if(Input.GetKey(KeyCode.P))
+        {
+            Debug.Log(totalCoins);
+        }
     }
 }

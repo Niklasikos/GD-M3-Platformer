@@ -23,4 +23,15 @@ public class WinScreen : MonoBehaviour
         SceneManager.LoadScene("LevelSelect");
         Time.timeScale = 1;
     }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+        Time.timeScale = 1;
+    }
+
+    public void QuitApp()
+    {
+        Application.Quit();
+    }
 }

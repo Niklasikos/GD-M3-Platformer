@@ -26,5 +26,6 @@ public class MainMenuManager : MonoBehaviour
     public void ResetProgress()
     {
         GameManager.Instance.ResetData();
+        GameManager.Instance.UpdateFiles();
     }
 }

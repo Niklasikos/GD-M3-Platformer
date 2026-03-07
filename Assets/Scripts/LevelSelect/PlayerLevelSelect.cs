@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlayerLevelSelect : MonoBehaviour
 {
+    public static PlayerLevelSelect Instance;
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
     public Transform GroundCheck;
@@ -11,18 +12,22 @@ public class PlayerLevelSelect : MonoBehaviour
 
     private Rigidbody2D rb;
     private bool isGrounded;
-
+    public GameObject pauseMenu;
+    public bool paused = false;
     private Animator animator;
 
     private SpriteRenderer spriteRenderer;
-    public int extraJumpsValue = 1;
-    private int extraJumps;
+    private AudioSource audioSource;
+    public float extraJumpsValue = 1;
+    private float extraJumps;
     void Start()
     {
+        Instance = this;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
+        audioSource = GetComponent<AudioSource>();
+        extraJumpsValue = GameManager.Instance.data[1];
         extraJumps = extraJumpsValue;
     }
 
@@ -36,16 +41,21 @@ public class PlayerLevelSelect : MonoBehaviour
             extraJumps = extraJumpsValue;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if(!paused)
         {
-            if(isGrounded)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);                
-            }
-            else if(extraJumps > 0)
-            {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);  
-                extraJumps--;
+                if (isGrounded)
+                {
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                    audioSource.Play();
+                }
+                else if (extraJumps > 0)
+                {
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                    extraJumps--;
+                    audioSource.Play();
+                }
             }
         }
 
@@ -53,6 +63,22 @@ public class PlayerLevelSelect : MonoBehaviour
 
         if (moveInput > 0f) spriteRenderer.flipX = false;
         else if (moveInput < 0f) spriteRenderer.flipX = true;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            paused = !paused;
+
+            if (paused)
+            {
+                Time.timeScale = 0f;
+                pauseMenu.SetActive(true);
+            }
+            else
+            {
+                Time.timeScale = 1f;
+                pauseMenu.SetActive(false);
+            }
+        }
     }
 
     private void FixedUpdate()

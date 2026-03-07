@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Flag0 : MonoBehaviour
+public class Flag2 : MonoBehaviour
 {
     public GameObject winUI;
     public bool win = false;
@@ -14,7 +14,7 @@ public class Flag0 : MonoBehaviour
                 Time.timeScale = 0;
                 winUI.SetActive(true); 
                 GameManager.Instance.totalCoins = GameManager.Instance.totalCoins + Player.Instance.coins;
-                GameManager.Instance.level1 = 1;
+                GameManager.Instance.level3 = 1;
                 GameManager.Instance.UpdateFiles();
                 win = true;
             }

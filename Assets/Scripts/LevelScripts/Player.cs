@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     public TextMeshProUGUI coinsText;
     public Scene currentScene;
     public string currentSceneName;
+    public GameObject pauseMenu;
+    public bool paused = false;
 
     private Rigidbody2D rb;
     private bool isGrounded;
@@ -25,6 +27,9 @@ public class Player : MonoBehaviour
     private Animator animator;
 
     private SpriteRenderer spriteRenderer;
+    private AudioSource audioSource;
+    public AudioClip Jump;
+    public AudioClip Damage;
     public float extraJumpsValue = 1;
     private float extraJumps;
     void Start()
@@ -34,6 +39,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
         extraJumpsValue = GameManager.Instance.data[1];
         extraJumps = extraJumpsValue;
 
@@ -53,18 +59,24 @@ public class Player : MonoBehaviour
             extraJumps = extraJumpsValue;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if(!paused)
         {
-            if(isGrounded)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);                
-            }
-            else if(extraJumps > 0)
-            {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);  
-                extraJumps--;
+                if (isGrounded)
+                {
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                    PlaySFX(Jump);
+                }
+                else if (extraJumps > 0)
+                {
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                    extraJumps--;
+                    PlaySFX(Jump);
+                }
             }
         }
+
 
         SetAnimation(moveInput);
 
@@ -72,6 +84,22 @@ public class Player : MonoBehaviour
 
         if (moveInput > 0f) spriteRenderer.flipX = false;
         else if (moveInput < 0f) spriteRenderer.flipX = true;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            paused = !paused;
+
+            if (paused)
+            {
+                Time.timeScale = 0f;
+                pauseMenu.SetActive(true);
+            }
+            else
+            {
+                Time.timeScale = 1f;
+                pauseMenu.SetActive(false);
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -109,6 +137,7 @@ public class Player : MonoBehaviour
     {
         if(collision.gameObject.tag == "Damage")
         {
+            PlaySFX(Damage);  
             health -= 25;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             StartCoroutine(BlinkRed());
@@ -127,7 +156,7 @@ public class Player : MonoBehaviour
         spriteRenderer.color = Color.white;
     }
 
-    private void Die()
+    public void Die()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(currentSceneName);
     }
@@ -135,5 +164,11 @@ public class Player : MonoBehaviour
     public void UpdateCoinCounter()
     {
         coinsText.text = ": " + coins;
+    }
+
+    public void PlaySFX(AudioClip audioClip)
+    {
+        audioSource.clip = audioClip;
+        audioSource.Play();
     }
 }
