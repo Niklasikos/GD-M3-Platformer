@@ -29099,8 +29099,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   E: {fileID: 2123549077}
-  amplitude: 2
-  speed: 1
+  amplitude: 0.25
+  speed: 0.5
 --- !u!1 &1516012608
 GameObject:
   m_ObjectHideFlags: 0

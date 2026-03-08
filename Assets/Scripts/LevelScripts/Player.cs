@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class Player : MonoBehaviour
 {
@@ -134,6 +135,22 @@ public class Player : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Damage")
+        {
+            PlaySFX(Damage);  
+            health -= 25;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            StartCoroutine(BlinkRed());
+
+            if(health <= 0)
+            {
+                Die();
+            }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Damage")
         {

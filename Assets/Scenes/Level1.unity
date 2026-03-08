@@ -22896,6 +22896,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MovingPlatform1
       objectReference: {fileID: 0}
+    - target: {fileID: 6125912039707995559, guid: a99d050bc8a257a4fb12dccc37b7da17, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
