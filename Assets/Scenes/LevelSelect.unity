@@ -27054,7 +27054,7 @@ GameObject:
   - component: {fileID: 752890754}
   - component: {fileID: 752890757}
   - component: {fileID: 752890756}
-  - component: {fileID: 752890755}
+  - component: {fileID: 752890758}
   m_Layer: 0
   m_Name: DoorSprite
   m_TagString: Untagged
@@ -27077,21 +27077,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 87813455}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &752890755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 752890753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c220fac869f5d0f42b6a797843cb326d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  E: {fileID: 1947154553}
-  amplitude: 0.25
-  speed: 0.5
 --- !u!61 &752890756
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -27193,6 +27178,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &752890758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752890753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b480af2f18b3c514fa7f2ad14781bfbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  E: {fileID: 1947154553}
+  amplitude: 0.25
+  speed: 0.5
 --- !u!1 &882558782
 GameObject:
   m_ObjectHideFlags: 0
