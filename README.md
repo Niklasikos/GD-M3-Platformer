@@ -17,3 +17,5 @@
 > 2 = de totale aantal extrajumps
 >
 > de laatste 4 getalen zijn checks om te kijken of de player de levels al unlocked heeft is een getaal 1 dan unlocked is het 0 dan is het level nog niet geunlocked
+
+
